@@ -8,11 +8,11 @@ RUN apt-get update && apt-get install build-essential
 
 RUN pip install -r requirements.txt
 
-RUN mkdir -p /usr/local/airflow/dags
+RUN mkdir /usr/local/airflow/dags
 
-RUN mkdir -p /usr/local/airflow/example1
+RUN mkdir -p /usr/local/airflow/example
 ENV AIRFLOW__CORE__FERNET_KEY=VYZffmGueZ9NZk-YCFKnVt5xYTKzXnuMvZQn9ave6GY=
 
 RUN airflow initdb
 
-WORKDIR /usr/local/airflow/example1
+WORKDIR /usr/local/airflow/example

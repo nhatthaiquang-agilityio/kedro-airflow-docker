@@ -1,6 +1,11 @@
 # Kedro Airflow
-    Create a kedro project and run kedro pipeline on Airflow
+    Create a kedro project and run kedro pipelines on Airflow
 
+### Prerequisites
++ Docker Compose
++ Airflow 1.10.9
++ Kedro 0.16.6
++ Kedro-Airflow 0.3.0
 
 ### Build
 + Build image
@@ -24,12 +29,12 @@
 
 
 ### Issues
-+ [Support for MemoryDataSet](https://github.com/quantumblacklabs/kedro-airflow/issues/41)
++ [NOT Support for MemoryDataSet](https://github.com/quantumblacklabs/kedro-airflow/issues/41)
     ```
-    {{api.py:296}} INFO - Loading: /usr/local/airflow/example1/conf/base/logging.yml
+    {{api.py:296}} INFO - Loading: /usr/local/airflow/example/conf/base/logging.yml
     /usr/local/lib/python3.7/site-packages/fsspec/implementations/local.py:33: FutureWarning: The default value of auto_mkdir=True has been deprecated and will be changed to auto_mkdir=False by default in a future release.
     FutureWarning,
-    2020-12-23 03:17:14,387 - airflow.models.dagbag.DagBag - ERROR - Failed to import: /usr/local/airflow/dags/example1_dag.py
+    2020-12-23 03:17:14,387 - airflow.models.dagbag.DagBag - ERROR - Failed to import: /usr/local/airflow/dags/example_dag.py
     Traceback (most recent call last):
     File "/usr/local/lib/python3.7/site-packages/airflow/models/dagbag.py", line 243, in process_file
         m = imp.load_source(mod_name, filepath)
@@ -39,7 +44,7 @@
     File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
     File "<frozen importlib._bootstrap_external>", line 728, in exec_module
     File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
-    File "/usr/local/airflow/dags/example1_dag.py", line 95, in <module>
+    File "/usr/local/airflow/dags/example_dag.py", line 95, in <module>
         runner.run(pipeline, data_catalog)
     File "/usr/local/lib/python3.7/site-packages/kedro_airflow/runner.py", line 115, in run
         catalog.add(ds_name, self.create_default_data_set(ds_name))

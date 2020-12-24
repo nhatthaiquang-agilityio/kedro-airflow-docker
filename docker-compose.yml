@@ -2,12 +2,11 @@ version: '3.0'
 services:
   webserver:
     image: kedro-airflow:latest
-    tty: true
     ports:
       - 8080:8080
     # environment:
-    #   - AIRFLOW_HOME=/usr/local/airflow/example1
+    #   - AIRFLOW_HOME=/usr/local/airflow/example
     volumes:
-      - ./example1:/usr/local/airflow/example1
-      - ./example1/airflow_dags:/usr/local/airflow/dags
+      - ./example:/usr/local/airflow/example
+      - ./example/airflow_dags:/usr/local/airflow/dags
     command: bash -c "kedro install && airflow webserver"
