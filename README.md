@@ -20,7 +20,7 @@
     ```
 
 ### Improvements
-    + Need to improve the docker-compose build. This mean: cache `kedro install` command
++ Need to improve the docker-compose build. This mean: cache `kedro install` command
 
 
 ### Issues
