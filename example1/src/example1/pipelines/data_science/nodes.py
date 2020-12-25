@@ -42,7 +42,7 @@ import pandas as pd
 
 def train_model(
     train_x: pd.DataFrame, train_y: pd.DataFrame, parameters: Dict[str, Any]
-) -> np.ndarray:
+) -> None:
     """Node for training a simple multi-class logistic regression model. The
     number of training iterations as well as the learning rate are taken from
     conf/project/parameters.yml. All of the data as well as the parameters
@@ -72,10 +72,18 @@ def train_model(
         weights.append(theta)
 
     # Return a joint multi-class model with weights for all classes
-    return np.vstack(weights).transpose()
+    # return np.vstack(weights).transpose()
+    # return dict(
+    #     model=weights
+    # )
+    dict_model = dict(
+        model=weights
+    )
+    model_pd = pd.DataFrame.from_dict(dict_model)
+    model_pd.to_csv("data/07_model_output/model.csv")
 
-
-def predict(model: np.ndarray, test_x: pd.DataFrame) -> np.ndarray:
+def predict(model: pd.DataFrame, test_x: pd.DataFrame):
+#def predict(model: np.ndarray, test_x: pd.DataFrame) -> np.ndarray:
     """Node for making predictions given a pre-trained model and a test set.
     """
     X = test_x.to_numpy()
@@ -85,10 +93,10 @@ def predict(model: np.ndarray, test_x: pd.DataFrame) -> np.ndarray:
     X = np.concatenate((bias, X), axis=1)
 
     # Predict "probabilities" for each class
-    result = _sigmoid(np.dot(X, model))
+    result = _sigmoid(np.dot(X, np.vstack(model).transpose()))
 
     # Return the index of the class with max probability for all samples
-    return np.argmax(result, axis=1)
+    # return np.argmax(result, axis=1)
 
 
 def report_accuracy(predictions: np.ndarray, test_y: pd.DataFrame) -> None:
@@ -107,3 +115,10 @@ def report_accuracy(predictions: np.ndarray, test_y: pd.DataFrame) -> None:
 def _sigmoid(z):
     """A helper sigmoid function used by the training and the scoring nodes."""
     return 1 / (1 + np.exp(-z))
+
+
+def join_statements(my_greeting: pd.DataFrame):
+    #my_greeting = greeting["my_greeting"]
+    print("RUn join statements")
+    print(my_greeting)
+    return f"{my_greeting} Kedro!"

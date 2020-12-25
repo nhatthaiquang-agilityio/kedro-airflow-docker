@@ -33,8 +33,6 @@ from slugify import slugify
 
 from kedro_airflow.runner import AirflowRunner
 from kedro.framework.context import load_context # isort:skip
-from kedro.io import DataCatalog, MemoryDataSet
-from kedro.extras.datasets.pandas import CSVDataSet
 
 # Path to Kedro project directory
 project_path = "/usr/local/airflow/example1"
@@ -87,21 +85,6 @@ dag = DAG(
 _context = load_context(project_path)
 data_catalog = _context.catalog
 pipeline = _context.pipeline
-
-# TODO: set the empty dataset
-# hack the Data set 'example_train_y' is not registered in the data catalog.
-# unregistered_ds = pipeline.data_sets() - set(data_catalog.list())
-# for unregister in unregistered_ds:
-#     data = MemoryDataSet(data=None)
-#     data_catalog.add(unregister, data)
-    # data_catalog.save(unregister, "")
-
-    # data = CSVDataSet(
-    #     filepath="data/01_raw/empty.csv",
-    #     load_args=None,
-    #     save_args={"index": False})
-    # DataCatalog(data_sets = { unregister: data })
-    # data_catalog.add_feed_dict({ unregister: data })
 
 runner = AirflowRunner(
     dag=dag,

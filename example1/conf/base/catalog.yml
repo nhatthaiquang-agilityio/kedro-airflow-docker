@@ -49,24 +49,32 @@ example_iris_data:
 
 example_train_x:
   type: pandas.CSVDataSet
-  filepath: data/03_primary/train_x.csv",
+  filepath: data/03_primary/train_x.csv
 
 example_train_y:
   type: pandas.CSVDataSet
-  filepath: data/03_primary/train_y.csv",
+  filepath: data/03_primary/train_y.csv
 
 example_test_x:
   type: pandas.CSVDataSet
-  filepath: data/03_primary/test_x.csv",
+  filepath: data/03_primary/test_x.csv
 
 example_test_y:
   type: pandas.CSVDataSet
-  filepath: data/03_primary/test_y.csv",
+  filepath: data/03_primary/test_y.csv
+
+# my_greeting:
+#   type: pandas.CSVDataSet
+#   filepath: data/03_primary/my_greeting.csv
+
+# my_message:
+#   type: pandas.CSVDataSet
+#   filepath: data/03_primary/my_message.csv
 
 example_model:
   type: pandas.CSVDataSet
-  filepath: data/07_model_output/example_model.csv",
+  filepath: data/07_model_output/model.csv
 
-example_predictions:
-  type: pandas.CSVDataSet
-  filepath: data/07_model_output/example_predictions.csv",
+# example_predictions:
+#   type: pandas.CSVDataSet
+#   filepath: data/07_model_output/example_predictions.csv",

@@ -34,7 +34,7 @@ Delete this when you start working on your own Kedro project.
 
 from kedro.pipeline import Pipeline, node
 
-from .nodes import split_data
+from .nodes import split_data, return_greeting
 
 
 def create_pipeline(**kwargs):
@@ -49,6 +49,14 @@ def create_pipeline(**kwargs):
                     test_x="example_test_x",
                     test_y="example_test_y",
                 ),
-            )
+            ),
+
+            # node(
+            #     return_greeting,
+            #     None,
+            #     dict(
+            #         my_greeting="my_greeting"
+            #     )
+            # )
         ]
     )

@@ -35,7 +35,7 @@ Delete this when you start working on your own Kedro project.
 from kedro.pipeline import Pipeline, node
 
 from .nodes import predict, report_accuracy, train_model
-
+from .nodes import join_statements
 
 def create_pipeline(**kwargs):
     return Pipeline(
@@ -43,13 +43,18 @@ def create_pipeline(**kwargs):
             node(
                 train_model,
                 ["example_train_x", "example_train_y", "parameters"],
-                "example_model",
+                None,
             ),
-            node(
-                predict,
-                dict(model="example_model", test_x="example_test_x"),
-                "example_predictions",
-            ),
-            node(report_accuracy, ["example_predictions", "example_test_y"], None),
+            # node(
+            #     predict,
+            #     dict(model="example_model", test_x="example_test_x"),
+            #     None,
+            # ),
+            # node(report_accuracy, ["example_predictions", "example_test_y"], None),
+            # node(
+            #     join_statements,
+            #     ["my_greeting"],
+            #     "my_message"
+            # )
         ]
     )

@@ -76,3 +76,9 @@ def split_data(data: pd.DataFrame, example_test_data_ratio: float) -> Dict[str, 
         test_x=test_data_x,
         test_y=test_data_y,
     )
+
+
+def return_greeting() -> Dict[str, Any]:
+    return dict(
+        my_greeting="Hello"
+    )
