@@ -47,22 +47,22 @@ example_iris_data:
   type: pandas.CSVDataSet
   filepath: data/01_raw/iris.csv
 
-example_train_x:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/train_x.csv
+Xtrain:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/Xtrain.pkl
 
-example_train_y:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/train_y.csv
+Ytrain:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/Ytrain.pkl
 
-example_test_x:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/test_x.csv
+Xtest:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/Xtest.pkl
 
-example_test_y:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/test_y.csv
+Ytest:
+  type: pickle.PickleDataSet
+  filepath: data/04_feature/Ytest.pkl
 
-example_model:
-  type: pandas.CSVDataSet
-  filepath: data/07_model_output/model.csv
+regression_model:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/pickle_model.pkl
