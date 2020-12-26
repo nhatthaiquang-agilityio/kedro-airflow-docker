@@ -9,3 +9,5 @@ pytz
 pyOpenSSL
 ndg-httpsclient
 wheel==0.32.2
+scikit-learn==0.23.0
+pickle5==0.0.11
