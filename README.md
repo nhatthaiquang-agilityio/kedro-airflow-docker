@@ -1,4 +1,4 @@
-# Kedro Airflow
+# Kedro Airflow Using Docker
     Create a kedro project and run kedro pipelines on Airflow
 
 ### Prerequisites
@@ -6,6 +6,13 @@
 + Airflow 1.10.9
 + Kedro 0.16.6
 + Kedro-Airflow 0.3.0
++ scikit-learn 0.23.0
++ pickle 0.0.11
+
+### Workflows
++ Split data and then save pickle files
++ Read pickle files, run train model and then save the regression model(pickle format)
++ Load the regression model and run Predict from the pickle model
 
 ### Build
 + Build image
@@ -23,6 +30,12 @@
     docker exec -it kedro-airflow-docker_webserver_1 bash
     airflow scheduler
     ```
+
++ Open web browser and click trigger dag
+    ```
+    http://localhost:8080
+    ```
+
 
 ### Improvements
 + Need to improve the docker-compose build. This mean: cache `kedro install` command
@@ -55,19 +68,16 @@
 
     ```
 
-### Workflows
-+ Split data and then save file csv
-+ Read files csv, train model and then save the model(csv format)
+### Results
++ Airflow Dashboard
+![Airflow Dashboard](images/Airflow-Dashboard.jpg)
 
-### Result
 + Airflow Tree
 ![Airflow Tree](images/Airflow-Tree.jpg)
 
 + Airflow Logs
 ![Airflow Logs](images/Airflow-Logs.jpg)
 
-+ Airflow Dashboard
-![Airflow Dashboard](images/Airflow-Dashboard.jpg)
-
 ### Reference
++ [Create a Pipeline](https://kedro.readthedocs.io/en/0.16.6/03_tutorial/04_create_pipelines.html)
 + [Kedro Airflow Test](https://github.com/evanmiller29/kedro-airflow-test)
