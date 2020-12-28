@@ -43,10 +43,32 @@
 # This is a data set used by the "Hello World" example pipeline provided with the project
 # template. Please feel free to remove it once you remove the example pipeline.
 
-example_iris_data:
+# define 'companies', 'shuttles', 'reviews', preprocessed_companies, preprocessed_shuttles  for running on Airflow
+companies:
   type: pandas.CSVDataSet
-  filepath: data/01_raw/iris.csv
+  filepath: data/01_raw/companies.csv
 
+shuttles:
+  type: pandas.ExcelDataSet
+  filepath: data/01_raw/shuttles.xlsx
+
+reviews:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/reviews.csv
+
+preprocessed_companies:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/preprocessed_companies.csv
+
+preprocessed_shuttles:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/preprocessed_shuttles.csv
+
+master_table:
+  type: pandas.CSVDataSet
+  filepath: data/03_primary/master_table.csv
+
+# define Xtrain, Ytrain, Xtest, Ytest, regression_model for running on Airflow
 Xtrain:
   type: pickle.PickleDataSet
   filepath: data/04_feature/Xtrain.pkl

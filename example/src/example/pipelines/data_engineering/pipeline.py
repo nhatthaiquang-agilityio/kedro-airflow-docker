@@ -34,18 +34,34 @@ Delete this when you start working on your own Kedro project.
 
 from kedro.pipeline import Pipeline, node
 
-from .nodes import split_data
+from .nodes import (
+    preprocess_companies, preprocess_shuttles, create_master_table
+)
 
 
 def create_pipeline(**kwargs):
     return Pipeline(
         [
             node(
-                split_data,
-                ["parameters"],
-                ["Xtrain", "Xtest", "Ytrain", "Ytest"],
-                name='split_data',
-                tags="tag_split"
+                func=preprocess_companies,
+                inputs="companies",
+                outputs="preprocessed_companies",
+                name="preprocessing_companies",
+            ),
+            node(
+                func=preprocess_shuttles,
+                inputs="shuttles",
+                outputs="preprocessed_shuttles",
+                name="preprocessing_shuttles",
+            ),
+            node(
+                func=create_master_table,
+                inputs=[
+                    "preprocessed_shuttles",
+                    "preprocessed_companies",
+                    "reviews"],
+                outputs="master_table",
+                name="master_table",
             )
         ]
     )

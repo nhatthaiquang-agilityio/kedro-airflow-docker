@@ -34,12 +34,19 @@ Delete this when you start working on your own Kedro project.
 
 from kedro.pipeline import Pipeline, node
 
-from .nodes import predict, train_model
+from .nodes import predict, train_model, split_data
 
 
 def create_pipeline(**kwargs):
     return Pipeline(
         [
+            node(
+                split_data,
+                ["master_table", "parameters"],
+                ["Xtrain", "Xtest", "Ytrain", "Ytest"],
+                name='split_data',
+                tags="tag_split"
+            ),
             node(
                 train_model, ["Xtrain", "Ytrain"], "regression_model",
                 name='train_model', tags="tag_train"),

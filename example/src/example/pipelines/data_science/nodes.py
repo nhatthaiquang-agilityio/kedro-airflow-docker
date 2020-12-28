@@ -35,14 +35,46 @@ Delete this when you start working on your own Kedro project.
 
 import logging
 
+from typing import Dict, List
 import numpy as np
-from sklearn.linear_model import LogisticRegression
+import pandas as pd
+
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+from sklearn.model_selection import train_test_split
 
 
-def train_model(Xtrain: np.ndarray, Ytrain: np.ndarray) -> LogisticRegression:
+def split_data(master_table: pd.DataFrame, parameters: Dict) -> List:
+    """Splits data into training and test sets.
+
+        Args:
+            data: Source data.
+            parameters: Parameters defined in parameters.yml.
+
+        Returns:
+            A list containing split data.
+
+    """
+    X = master_table[
+        [
+            "engines",
+            "passenger_capacity",
+            "crew",
+            "d_check_complete",
+            "moon_clearance_complete",
+        ]
+    ].values
+    y = master_table["price"].values
+    Xtrain, Xtest, Ytrain, Ytest = train_test_split(
+        X, y, test_size=parameters["test_size"],
+        random_state=parameters["random_state"])
+
+    return [Xtrain, Xtest, Ytrain, Ytest]
+
+
+def train_model(Xtrain: np.ndarray, Ytrain: np.ndarray) -> LinearRegression:
     # Create a model
-    regression_model = LogisticRegression(
-        C=0.1, max_iter=20, fit_intercept=True, n_jobs=3, solver='liblinear')
+    regression_model = LinearRegression()
 
     # train model
     regression_model.fit(Xtrain, Ytrain)
@@ -53,10 +85,8 @@ def train_model(Xtrain: np.ndarray, Ytrain: np.ndarray) -> LogisticRegression:
 
 def predict(
         Xtest: np.ndarray, Ytest: np.ndarray,
-        regression_model: LogisticRegression):
-    score = regression_model.score(Xtest, Ytest)
+        regression_model: LinearRegression):
+    Ypredict = regression_model.predict(Xtest)
+    score = r2_score(Ytest, Ypredict)
     logger = logging.getLogger(__name__)
     logger.info("Model has a coefficient R^2 of %.3f.", score)
-
-    Ypredict = regression_model.predict(Xtest)
-    logger.info("Predict: %s", Ypredict)

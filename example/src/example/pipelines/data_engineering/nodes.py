@@ -31,25 +31,80 @@ just for illustrating basic Kedro features.
 PLEASE DELETE THIS FILE ONCE YOU START WORKING ON YOUR OWN PROJECT!
 """
 
-from typing import Dict, List
-
-from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
+import pandas as pd
 
 
-def split_data(parameters: Dict) -> List:
+def _is_true(x):
+    return x == "t"
+
+
+def _parse_percentage(x):
+    if isinstance(x, str):
+        return float(x.replace("%", "")) / 100
+    return float("NaN")
+
+
+def _parse_money(x):
+    return float(x.replace("$", "").replace(",", ""))
+
+
+def preprocess_companies(companies: pd.DataFrame) -> pd.DataFrame:
+    """Preprocess the data for companies.
+
+        Args:
+            companies: Source data.
+        Returns:
+            Preprocessed data.
+
     """
-    Node for splitting the classical Iris data set into training and test
-    sets, each split into features and labels.
-    The split ratio parameter is taken from conf/project/parameters.yml.
-    The data and the parameters will be loaded and provided to your function
-    automatically when the pipeline is executed and
-    it is time to run this node.
+    companies["iata_approved"] = companies["iata_approved"].apply(_is_true)
+
+    companies["company_rating"] =\
+        companies["company_rating"].apply(_parse_percentage)
+
+    return companies
+
+
+def preprocess_shuttles(shuttles: pd.DataFrame) -> pd.DataFrame:
+    """Preprocess the data for shuttles.
+
+        Args:
+            shuttles: Source data.
+        Returns:
+            Preprocessed data.
+
     """
-    data = load_iris()
+    shuttles["d_check_complete"] = shuttles["d_check_complete"].apply(_is_true)
 
-    Xtrain, Xtest, Ytrain, Ytest = train_test_split(
-        data.data, data.target, test_size=parameters["test_size"],
-        random_state=parameters["random_state"])
+    shuttles["moon_clearance_complete"] =\
+        shuttles["moon_clearance_complete"].apply(_is_true)
 
-    return [Xtrain, Xtest, Ytrain, Ytest]
+    shuttles["price"] = shuttles["price"].apply(_parse_money)
+
+    return shuttles
+
+
+def create_master_table(
+        preprocessed_shuttles: pd.DataFrame,
+        preprocessed_companies: pd.DataFrame,
+        reviews: pd.DataFrame) -> pd.DataFrame:
+    """Combines all data to create a master table.
+
+        Args:
+            shuttles: Preprocessed data for shuttles.
+            companies: Preprocessed data for companies.
+            reviews: Source data for reviews.
+        Returns:
+            Master table.
+
+    """
+    rated_shuttles = preprocessed_shuttles.merge(
+        reviews, left_on="id", right_on="wsshuttle_id")
+
+    with_companies = rated_shuttles.merge(
+        preprocessed_companies, left_on="company_id", right_on="id"
+    )
+
+    master_table = with_companies.drop(["wsshuttle_id", "company_id"], axis=1)
+    master_table = master_table.dropna()
+    return master_table

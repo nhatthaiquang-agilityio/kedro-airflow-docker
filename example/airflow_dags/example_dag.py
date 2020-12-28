@@ -25,14 +25,13 @@
 #
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import sys
 from datetime import datetime, timedelta
 
 from airflow import DAG
 from slugify import slugify
 
 from kedro_airflow.runner import AirflowRunner
-from kedro.framework.context import load_context # isort:skip
+from kedro.framework.context import load_context
 
 # Path to Kedro project directory
 project_path = "/usr/local/airflow/example"
@@ -63,7 +62,8 @@ def process_context(data_catalog, **airflow_context):
     # you could put all the airflow context into the catalog as a new dataset
     for key in ["dag", "conf", "macros", "task", "task_instance", "ti", "var"]:
         del airflow_context[key]  # drop unpicklable things
-    data_catalog.add_feed_dict({"airflow_context": airflow_context}, replace=True)
+    data_catalog.add_feed_dict(
+        {"airflow_context": airflow_context}, replace=True)
 
     # or add just the ones you need into Kedro parameters
     parameters = data_catalog.load("parameters")
