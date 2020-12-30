@@ -1,5 +1,6 @@
 # Kedro Airflow Using Docker
-    Create a kedro project and run kedro pipelines on Airflow
+    Create a kedro project and run kedro pipelines on Airflow platform
+    Pre-process data, train model and predict
 
 ### Prerequisites
 + Docker Compose
@@ -10,6 +11,7 @@
 + pickle 0.0.11
 
 ### Workflows
++ Read data from csv files and excel file as well, pre-process files and then save csv files
 + Split data and then save pickle files
 + Read pickle files, run train model and then save the regression model(pickle format)
 + Load the regression model and run Predict from the pickle model
@@ -36,6 +38,12 @@
     http://localhost:8080
     ```
 
++ Open Visualise Pipelines
+    ```
+    docker exec -it kedro-airflow-docker_webserver_1 bash
+    kedro viz --host 0.0.0.0
+    ```
+    Open the browser with http://localhost:4141
 
 ### Improvements
 + Need to improve the docker-compose build. This mean: cache `kedro install` command
@@ -67,13 +75,28 @@
     AirflowRunner does not support unregistered data sets.
 
     ```
+    Fixed: define output data files for each node in catalog.yml(save output files for each node)
+
++ [Could not load Excel Data Set](https://exerror.com/xlrd-biffh-xlrderror-excel-xlsx-file-not-supported/)
+    ```
+    kedro.io.core.DataSetError: Failed while loading data from data set ExcelDataSet
+    (filepath=/home/kedro/data/01_raw/shuttles.xlsx,
+    load_args={'engine': xlrd}, protocol=file, save_args={'index': False},
+    writer_args={'engine': xlsxwriter}).
+    Excel xlsx file; not supported
+    ```
+    Fixed: xlrd==1.2.0
+
 
 ### Results
++ Kedro Visualise Pipelines
+![Kedro Viz](images/Kedro-Viz.jpg)
+
++ Kedro Logs
+![Kedro Logs](images/Kedro-Logs.jpg)
+
 + Airflow Dashboard
 ![Airflow Dashboard](images/Airflow-Dashboard.jpg)
-
-+ Airflow Tree
-![Airflow Tree](images/Airflow-Tree.jpg)
 
 + Airflow Logs
 ![Airflow Logs](images/Airflow-Logs.jpg)
