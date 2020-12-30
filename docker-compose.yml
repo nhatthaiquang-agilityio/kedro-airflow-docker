@@ -4,6 +4,7 @@ services:
     image: kedro-airflow:latest
     ports:
       - 8080:8080
+      - 4141:4141 # kedro-viz
     # environment:
     #   - AIRFLOW_HOME=/usr/local/airflow/example
     volumes:
