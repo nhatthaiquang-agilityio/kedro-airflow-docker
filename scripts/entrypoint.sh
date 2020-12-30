@@ -1,4 +1,2 @@
 #!/usr/bin/env bash
-cd example &&
-    kedro install &&
-    airflow webserver
+cd example && airflow webserver

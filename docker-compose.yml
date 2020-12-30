@@ -10,4 +10,4 @@ services:
     volumes:
       - ./example:/usr/local/airflow/example
       - ./example/airflow_dags:/usr/local/airflow/dags
-    command: bash -c "kedro install && airflow webserver"
+    command: bash -c "airflow webserver"

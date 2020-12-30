@@ -45,10 +45,6 @@
     ```
     Open the browser with http://localhost:4141
 
-### Improvements
-+ Need to improve the docker-compose build. This mean: cache `kedro install` command
-
-
 ### Issues
 + [NOT Support for MemoryDataSet](https://github.com/quantumblacklabs/kedro-airflow/issues/41)
     ```
