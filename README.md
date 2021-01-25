@@ -1,6 +1,6 @@
 # Kedro Airflow Using Docker
     Create a kedro project and run kedro pipelines on Airflow platform
-    Pre-process data, train model and predict
+    Pre-process data, train model, evaluate and predict
 
 ### Prerequisites
 + Docker Compose
@@ -13,7 +13,7 @@
 ### Workflows
 + Read data from csv files and excel file as well, pre-process files and then save csv files
 + Split data and then save pickle files
-+ Read pickle files, run train model and then save the regression model(pickle format)
++ Read pickle files, run train model and also save the regression model(pickle format)
 + Load the regression model and run Predict from the pickle model
 
 ### Build

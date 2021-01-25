@@ -50,15 +50,11 @@ class ProjectHooks:
         """
         data_engineering_pipeline = de.create_pipeline()
         data_science_pipeline = ds.create_pipeline()
-        # df = data_engineering_pipeline + \
-        # data_science_pipeline.only_nodes_with_tags('tag_train', 'tag_predict')
-        df = data_engineering_pipeline + data_science_pipeline
-        print(df.describe())
 
         return {
             "de": data_engineering_pipeline,
             "ds": data_science_pipeline,
-            "__default__": df,
+            "__default__": data_engineering_pipeline + data_science_pipeline,
         }
 
     @hook_impl
